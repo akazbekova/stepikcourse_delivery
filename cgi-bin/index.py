@@ -13,7 +13,7 @@ alive_state = True
 
 @app.route("/alive")
 def alive():
-    if alive_state == True:
+    if alive_state:
         return '{"alive":true}'
     else:
         return '{"alive":true}'
