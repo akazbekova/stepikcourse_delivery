@@ -1,6 +1,6 @@
 import json
 from flask import Flask
-
+import random
 
 app = Flask(__name__)
 
@@ -32,6 +32,18 @@ promotion_text = {"promotion":"Сегодня скидка "+ promo_discount +" 
 @app.route("/promotion")
 def promotion():
     return json.dumps(promotion_text, ensure_ascii=False)
+
+
+@app.route("/promo")
+def promotion_text():
+    all_promotions = [
+        "Сегодня скидка 15% по промокоду stepik",
+        "Сегодня скидка 10% по промокоду summer",
+        "Удваиваем все пиццы по промокоду udodopizza"
+    ]
+    promotion_number = random.randint(0,2)
+    return json.dumps({"promotion": all_promotions[promotion_number]}, ensure_ascii=False)
+
 
 @app.route("/promo/<code>")
 def checkpromo(code):
