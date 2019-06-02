@@ -26,12 +26,6 @@ schedule = {"opens": workhours_open, "closes": workhours_closes}
 def workhours():
     return json.dumps(schedule)
 
-promocode = "stepik"
-promo_discount = "15%"
-promotion_text = {"promotion":"Сегодня скидка "+ promo_discount +" по промокоду " + promocode}
-@app.route("/promotion")
-def promotion():
-    return json.dumps(promotion_text, ensure_ascii=False)
 
 
 @app.route("/promo")
@@ -45,16 +39,21 @@ def promotion_text():
     return json.dumps({"promotion": all_promotions[promotion_number]}, ensure_ascii=False)
 
 
+
+promocodes_list = [
+      {"code":"doubletrouble", "discount":"50%"},
+      {"code":"illbeback", "discount":"25%"},
+      {"code":"stepik", "discount":"25%"},
+      {"code":"libertyordeath", "discount":"100%"},
+      {"code":"summer", "discount":"10%"},
+      {"code":"pleaseplease", "discount":"5%"}]
+
 @app.route("/promo/<code>")
 def checkpromo(code):
-    if code == "Stepik":
-        return '{"valid":true, "discount":15}'
-    elif code == "summer":
-        return '{"valid":true, "discount":10}'
-    elif code == "pleaseplease":
-        return '{"valid":true, "discount":5}'
-    else:
-        return '{"valid":false, "discount":0}'
+  for n in promocodes_list:
+       if code.lower() == n["code"]:
+           return json.dumps({"valid":True,"discount": n["discount"]})
+  return json.dumps({"valid":False, "discount":0})
 
 
 app.run("localhost",8000)
