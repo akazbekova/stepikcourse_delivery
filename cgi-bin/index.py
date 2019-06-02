@@ -56,5 +56,27 @@ def checkpromo(code):
   return json.dumps({"valid":False, "discount":0})
 
 
+
+meals = [{
+ "title": "Chinken",
+ "id": 1,
+ "available": True,
+ "picture": "",
+ "price": 20.0,
+ "category": 1
+}, {
+ "title": "Milk",
+ "id": 2,
+ "available": True,
+ "picture": "",
+ "price": 10.0,
+ "category": 1
+}]
+
+@app.route("/meals")
+def meal():
+    return json.dumps(meals, ensure_ascii=False)
+
+
 app.run("localhost",8000)
 
