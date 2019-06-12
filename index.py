@@ -17,16 +17,16 @@ def alive():
     config_content = config_file.read()
     data = json.loads(config_content)
     config_file.close()
-    return json.dumps(data)
+    return json.dumps({"alive":data["alive"]})
 
 
-
-workhours_open = "08:00"
-workhours_closes = "20:00"
-schedule = {"opens": workhours_open, "closes": workhours_closes}
 @app.route("/workhours")
 def workhours():
-    return json.dumps(schedule)
+    config_file = open('C:/Users/user/PycharmProjects/stepikcourse_delivery/config.json', "r")
+    config_content = config_file.read()
+    data = json.loads(config_content)
+    config_file.close()
+    return json.dumps(data["workhours"])
 
 
 
