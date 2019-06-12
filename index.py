@@ -75,24 +75,14 @@ def checkpromo(code):
 
 
 
-meals = [{
- "title": "Chinken",
- "id": 1,
- "available": True,
- "picture": "",
- "price": 20.0,
- "category": 1
-}, {
- "title": "Milk",
- "id": 2,
- "available": True,
- "picture": "",
- "price": 10.0,
- "category": 1
-}]
 
 @app.route("/meals")
 def meal():
+    meals = open('C:/Users/user/PycharmProjects/stepikcourse_delivery/meals.json', "r")
+    user_meals = json.loads(meals.read())
+    meals.close
+
+
     users_file_r = open('C:/Users/user/PycharmProjects/stepikcourse_delivery/users.json', "r")
     users_data = json.loads(users_file_r.read())
     users_file_r.close()
@@ -107,10 +97,11 @@ def meal():
         for i in promos:
             if i["code"] == promocode:
                 discount = i["discount"]
-        for m in meals:
+        for m in user_meals:
             m["price"] = m["price"] / 100 * (100 - discount)
 
-    return json.dumps(meals, ensure_ascii=False)
+    return json.dumps(user_meals, ensure_ascii=False)
+
 
 
 app.run("localhost",8000)
