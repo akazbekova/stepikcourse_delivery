@@ -57,6 +57,7 @@ def promo_text():
 def checkpromo(code):
     promos_file = open('C:/Users/user/PycharmProjects/stepikcourse_delivery/promo.json', "r")
     promos = json.loads(promos_file.read())
+    promos_file.close()
     for n in promos:
        if n["code"] == code.lower():
            users_file_r = open('C:/Users/user/PycharmProjects/stepikcourse_delivery/users.json', "r")
@@ -92,6 +93,23 @@ meals = [{
 
 @app.route("/meals")
 def meal():
+    users_file_r = open('C:/Users/user/PycharmProjects/stepikcourse_delivery/users.json', "r")
+    users_data = json.loads(users_file_r.read())
+    users_file_r.close()
+
+    discount = 0
+
+    promocode = users_data[USER_ID]["promocode"]
+    if promocode != None:
+        promos_file = open('C:/Users/user/PycharmProjects/stepikcourse_delivery/promo.json', "r")
+        promos = json.loads(promos_file.read())
+        promos_file.close
+        for i in promos:
+            if i["code"] == promocode:
+                discount = i["discount"]
+        for m in meals:
+            m["price"] = m["price"] / 100 * (100 - discount)
+
     return json.dumps(meals, ensure_ascii=False)
 
 
