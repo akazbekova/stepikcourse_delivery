@@ -2,6 +2,7 @@ import json
 from flask import Flask
 import random
 
+datafile_encoding = 'utf8'
 app = Flask(__name__)
 
 @app.route("/")
@@ -30,16 +31,23 @@ def workhours():
 
 
 
-@app.route("/promo")
+@app.route("/promotion")
 def promotion_text():
+    promotion_number = random.randint(0,2)
+    promotion_file = open('C:/Users/user/PycharmProjects/stepikcourse_delivery/promotions.json', "r")
+    promotions = json.loads(promotion_file.read())
+    return json.dumps(promotions[promotion_number], ensure_ascii=False)
+
+
+@app.route("/promo")
+def promo_text():
     all_promotions = [
         "Сегодня скидка 15% по промокоду stepik",
         "Сегодня скидка 10% по промокоду summer",
         "Удваиваем все пиццы по промокоду udodopizza"
     ]
-    promotion_number = random.randint(0,2)
-    return json.dumps({"promotion": all_promotions[promotion_number]}, ensure_ascii=False)
-
+    promo_random = random.randint(0,2)
+    return json.dumps({"promotion": all_promotions[promo_random]}, ensure_ascii=False)
 
 
 promocodes_list = [
