@@ -39,7 +39,7 @@ def promotion_text():
     return json.dumps(promotions[promotion_number], ensure_ascii=False)
 
 
-@app.route("/promo")
+@app.route("/oldpromotion")
 def promo_text():
     all_promotions = [
         "Сегодня скидка 15% по промокоду stepik",
@@ -50,20 +50,15 @@ def promo_text():
     return json.dumps({"promotion": all_promotions[promo_random]}, ensure_ascii=False)
 
 
-promocodes_list = [
-      {"code":"doubletrouble", "discount":"50%"},
-      {"code":"illbeback", "discount":"25%"},
-      {"code":"stepik", "discount":"25%"},
-      {"code":"libertyordeath", "discount":"100%"},
-      {"code":"summer", "discount":"10%"},
-      {"code":"pleaseplease", "discount":"5%"}]
 
 @app.route("/promo/<code>")
 def checkpromo(code):
-  for n in promocodes_list:
-       if code.lower() == n["code"]:
+    promos_file = open('C:/Users/user/PycharmProjects/stepikcourse_delivery/promo.json', "r")
+    promos = json.loads(promos_file.read())
+    for n in promos:
+       if n["code"] == code.lower():
            return json.dumps({"valid":True,"discount": n["discount"]})
-  return json.dumps({"valid":False, "discount":0})
+    return json.dumps({"valid":False, "discount":0})
 
 
 
