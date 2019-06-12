@@ -13,10 +13,12 @@ alive_state = True
 
 @app.route("/alive")
 def alive():
-    if alive_state:
-        return '{"alive":true}'
-    else:
-        return '{"alive":true}'
+    config_file = open('C:/Users/user/PycharmProjects/stepikcourse_delivery/config.json', "r")
+    config_content = config_file.read()
+    data = json.loads(config_content)
+    config_file.close()
+    return json.dumps(data)
+
 
 
 workhours_open = "08:00"
