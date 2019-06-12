@@ -5,6 +5,8 @@ import random
 datafile_encoding = 'utf8'
 app = Flask(__name__)
 
+USER_ID = "1"
+
 @app.route("/")
 def hello():
     return "Hello world!"
@@ -57,6 +59,16 @@ def checkpromo(code):
     promos = json.loads(promos_file.read())
     for n in promos:
        if n["code"] == code.lower():
+           users_file_r = open('C:/Users/user/PycharmProjects/stepikcourse_delivery/users.json', "r")
+           users_data = json.loads(users_file_r.read())
+           users_file_r.close()
+
+           users_data[USER_ID]["promocode"] = code
+
+           users_file_w = open('C:/Users/user/PycharmProjects/stepikcourse_delivery/users.json', "w")
+           users_file_w.write(json.dumps(users_data))
+           users_file_w.close()
+
            return json.dumps({"valid":True,"discount": n["discount"]})
     return json.dumps({"valid":False, "discount":0})
 
